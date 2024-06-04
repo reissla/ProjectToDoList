@@ -48,6 +48,8 @@ public class UserService {
         return new UserDTO(userRepository.save(user));
     }
 
+    
+
     public void verifyIfAlreadyExists(User user){
         Optional<User> userFunction = userRepository.findByName(user.getName());
         if(userFunction.isPresent()){
