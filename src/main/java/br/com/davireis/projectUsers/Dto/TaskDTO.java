@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class TaskDTO {
 
     private Long id;
-    private String tittle;
+    private String title;
     private String description;
     private boolean completed;
     private LocalDateTime dueDate;
@@ -16,7 +16,7 @@ public class TaskDTO {
 
     public TaskDTO(Task task){
         id = task.getId();
-        tittle = task.getTitle();
+        title = task.getTitle();
         description = task.getDescription();
         completed = task.isCompleted();
         dueDate = task.getDueDate();
@@ -36,12 +36,12 @@ public class TaskDTO {
         this.id = id;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

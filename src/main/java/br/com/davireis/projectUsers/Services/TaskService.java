@@ -5,7 +5,6 @@ import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
 import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
 import br.com.davireis.projectUsers.Repository.TaskRepository;
 import br.com.davireis.projectUsers.entity.Task;
-import br.com.davireis.projectUsers.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +30,15 @@ public class TaskService {
         return taskDTO;
     }
 
+    public List<TaskDTO> listAll(){
+        List<Task> tasks = taskRepository.findAll();
+        return tasks.stream().map(TaskDTO::new).toList();
+    }
+
     //Inserir Task no banco de dados
     public Task insertTask(TaskDTO taskDTO){
-        verifyIfAlreadyExists(taskDTO);
         Task task = new Task(taskDTO);
+        verifyIfAlreadyExists(task);
         return taskRepository.save(task);
     }
 
@@ -53,8 +57,8 @@ public class TaskService {
         return null;
     }
 
-    public void verifyIfAlreadyExists(TaskDTO taskDTO){
-        Optional<Task> userFunction = taskRepository.findByTittle(taskDTO.getTittle());
+    public void verifyIfAlreadyExists(Task task){
+        Optional<Task> userFunction = taskRepository.findByTitle(task.getTitle());
         if(userFunction.isPresent()){
             throw new userAlreadyExistsException();
         }
