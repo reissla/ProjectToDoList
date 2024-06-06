@@ -27,6 +27,11 @@ public class UserController {
         userService.insertUser(userDTO);
     }
 
+    @PostMapping(value = "/teste")
+    public void changeUserPassword(@RequestBody UserDTO userDTO){
+        userService.changeUserPassword(userDTO.getEmail(), userDTO.getLogin(), userDTO.getSenha());
+    }
+
     @GetMapping("/{id}")
     public UserDTO findById(@PathVariable Long id){
         return userService.findUserById(id);

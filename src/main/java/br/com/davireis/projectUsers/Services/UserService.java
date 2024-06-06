@@ -48,7 +48,13 @@ public class UserService {
         return new UserDTO(userRepository.save(user));
     }
 
-    
+    public void changeUserPassword(String email, String login, String senha){
+        User user = userRepository.findByEmailAndLogin(email, login).get();
+        //Fazer retornar uma Exception caso nao encontre
+        //Enviar um email (API)
+        user.setSenha(senha);
+        System.out.println("senha alterada com sucesso!");
+    }
 
     public void verifyIfAlreadyExists(User user){
         Optional<User> userFunction = userRepository.findByName(user.getName());
