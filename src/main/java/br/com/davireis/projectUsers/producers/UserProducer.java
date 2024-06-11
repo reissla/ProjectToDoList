@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 //Dentro dessa classe que vai ser feita o publicacao das mensagens para o broker
 
 @Component
@@ -29,5 +31,15 @@ public class UserProducer {
         emailDTO.setText(user.getName() + "seja bem vindo(a)! \nAgradecemos o seu cadastro, aproveite!");
 
         rabbitTemplate.convertAndSend("", routingKey, emailDTO);
+    }
+
+    public void changePasswordMessageEmail(UUID id, String email){
+        var emailDTO = new EmailDTO();
+        emailDTO.setUserId(id);
+        emailDTO.setEmailTo(email);
+        emailDTO.setSubject("Senha alterada com sucesso!");
+        emailDTO.setText("Senha alterada com sucesso. Caso não tenha sido você clique aqui.");
+
+        rabbitTemplate.convertAndSend("",routingKey,emailDTO);
     }
 }

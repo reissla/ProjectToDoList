@@ -57,12 +57,11 @@ public class UserService {
         return new UserDTO(userRepository.save(user));
     }
 
+    //Fazer retornar uma Exception caso nao encontrev
     public void changeUserPassword(String email, String login, String senha){
         User user = userRepository.findByEmailAndLogin(email, login).get();
-        //Fazer retornar uma Exception caso nao encontre
-        //Enviar um email (API)
         user.setSenha(senha);
-        System.out.println("senha alterada com sucesso!");
+        userProducer.changePasswordMessageEmail(user.getId(), user.getEmail());
     }
 
     public void verifyIfAlreadyExists(User user){
@@ -80,13 +79,13 @@ public class UserService {
         return null;
     }
 
-    /*public UserDTO findByEmailAndLogin(String email, String login){
+    public UserDTO findByEmailAndLogin(String email, String login){
         Optional<User> userOptional = userRepository.findByEmailAndLogin(email, login);
         if(!userOptional.isPresent()){
             throw new userNotFoundException();
         }
-        return ;
-    }*/
+        return null;
+    }
 }
 
 
