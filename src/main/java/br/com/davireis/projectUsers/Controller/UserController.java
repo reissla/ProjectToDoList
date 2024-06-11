@@ -33,8 +33,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/teste")
-    public void changeUserPassword(@RequestBody UserDTO userDTO){
+    public ResponseEntity<User> changeUserPassword(@RequestBody UserDTO userDTO){
         userService.changeUserPassword(userDTO.getEmail(), userDTO.getLogin(), userDTO.getSenha());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @GetMapping("/{id}")
