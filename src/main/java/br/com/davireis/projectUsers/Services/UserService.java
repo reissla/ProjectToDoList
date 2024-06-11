@@ -5,6 +5,8 @@ import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
 import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
 import br.com.davireis.projectUsers.Repository.UserRepository;
 import br.com.davireis.projectUsers.entity.User;
+import br.com.davireis.projectUsers.producers.UserProducer;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +20,19 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    final UserProducer userProducer;
 
+    public UserService(UserRepository userRepository, UserProducer userProducer) {
+        this.userRepository=userRepository;
+        this.userProducer = userProducer;
+    }
 
-    public User insertUser(UserDTO userDTO){
-        User user = new User(userDTO);
-        verifyIfAlreadyExists(user);
-        return userRepository.save(user);
+    @Transactional
+    public User insertUser(User user){
+        user = userRepository.save(user);
+        //verifyIfAlreadyExists(user);
+        userProducer.publishMessageEmail(user);//envio de mensagens email
+        return user;
     }
 
     public List<UserDTO> findAllUsers(){
@@ -71,6 +80,13 @@ public class UserService {
         return null;
     }
 
+    /*public UserDTO findByEmailAndLogin(String email, String login){
+        Optional<User> userOptional = userRepository.findByEmailAndLogin(email, login);
+        if(!userOptional.isPresent()){
+            throw new userNotFoundException();
+        }
+        return ;
+    }*/
 }
 
 

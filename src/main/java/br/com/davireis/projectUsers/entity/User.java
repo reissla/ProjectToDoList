@@ -4,14 +4,17 @@ import br.com.davireis.projectUsers.Dto.UserDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_users")
 public class User {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -30,7 +33,7 @@ public class User {
 
     }
 
-    public User(Long id, String name, String login, String senha, String email) {
+    public User(UUID id, String name, String login, String senha, String email) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -46,11 +49,11 @@ public class User {
         email = userDTO.getEmail();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

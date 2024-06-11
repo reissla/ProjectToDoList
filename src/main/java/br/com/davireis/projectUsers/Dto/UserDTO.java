@@ -1,10 +1,15 @@
 package br.com.davireis.projectUsers.Dto;
 
 import br.com.davireis.projectUsers.entity.User;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.util.UUID;
 
 public class UserDTO {
 
-    private Long id;
+    private UUID id;
     private String name;
     private String login;
     private String senha;
@@ -28,11 +33,11 @@ public class UserDTO {
         email = user.getEmail();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

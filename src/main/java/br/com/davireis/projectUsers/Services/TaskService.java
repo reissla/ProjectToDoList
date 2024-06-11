@@ -17,6 +17,11 @@ public class TaskService {
     @Autowired
     public TaskRepository taskRepository;
 
+    //Faz a mesma coisa do Autowired, mas é uma outra forma de injeção sem acoplar com o spring boot(aconselhável dessa forma)
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
     //Listar Todas as Task
     public List<Task> listAllTasks(){
         return taskRepository.findAll();

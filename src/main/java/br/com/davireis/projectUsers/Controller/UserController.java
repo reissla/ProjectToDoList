@@ -4,7 +4,10 @@ package br.com.davireis.projectUsers.Controller;
 import br.com.davireis.projectUsers.Dto.UserDTO;
 import br.com.davireis.projectUsers.Services.UserService;
 import br.com.davireis.projectUsers.entity.User;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +26,10 @@ public class UserController {
     }
 
     @PostMapping
-    public void insertUser(@RequestBody UserDTO userDTO){
-        userService.insertUser(userDTO);
+    public ResponseEntity<User> insertUser(@RequestBody @Valid UserDTO userDTO){
+        var user = new User();
+        BeanUtils.copyProperties(userDTO,user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.insertUser(user));
     }
 
     @PostMapping(value = "/teste")
