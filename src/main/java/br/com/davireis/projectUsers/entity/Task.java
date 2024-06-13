@@ -37,7 +37,13 @@ public class Task {
     }
 
     public Task(TaskDTO taskDTO){
-
+        id = taskDTO.getId();
+        title = taskDTO.getTitle();
+        description = taskDTO.getDescription();
+        completed = taskDTO.isCompleted();
+        dueDate = taskDTO.getDueDate();
+        createdDate = taskDTO.getCreatedDate();
+        updatedDate = taskDTO.getUpdatedDate();
     }
 
     public Task(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate) {

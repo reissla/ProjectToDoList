@@ -1,9 +1,11 @@
 package br.com.davireis.projectUsers.Services;
 
+import br.com.davireis.projectUsers.Dto.TaskDTO;
 import br.com.davireis.projectUsers.Dto.UserDTO;
 import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
 import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
 import br.com.davireis.projectUsers.Repository.UserRepository;
+import br.com.davireis.projectUsers.entity.Task;
 import br.com.davireis.projectUsers.entity.User;
 import br.com.davireis.projectUsers.producers.UserProducer;
 import jakarta.transaction.Transactional;
@@ -27,6 +29,7 @@ public class UserService {
         this.userProducer = userProducer;
     }
 
+    //Cadastrar um User
     @Transactional
     public User insertUser(User user){
         user = userRepository.save(user);
@@ -35,11 +38,13 @@ public class UserService {
         return user;
     }
 
+    //Listar Users
     public List<UserDTO> findAllUsers(){
         List<User> users = userRepository.findAll();
         return users.stream().map(UserDTO::new).toList();
     }
 
+    //Procurar um User usando ID
     public UserDTO findUserById(Long id){
         findById(id);
         User entity = userRepository.findById(id).get();
@@ -47,23 +52,34 @@ public class UserService {
         return userDTO;
     }
 
+    //Deletar um User
     public void deleteUser(Long id){
         findById(id);
         userRepository.deleteById(id);
     }
 
+    //Atualizar colunas de um User
     public UserDTO updateUser(UserDTO userDTO){
         User user = new User(userDTO);
         return new UserDTO(userRepository.save(user));
     }
 
     //Fazer retornar uma Exception caso nao encontrev
+    //Mudar senha do User
     public void changeUserPassword(String email, String login, String senha){
         User user = userRepository.findByEmailAndLogin(email, login).get();
         user.setSenha(senha);
         userProducer.changePasswordMessageEmail(user.getId(), user.getEmail());
     }
 
+    //Adiciona uma task a um user
+    public User addTaskToUser(Long id, Task task){
+        User user = userRepository.findById(id).get();
+        user.setTaskList(task);
+        return user;
+    }
+
+    //Verificar se um User ja existe -> usando name
     public void verifyIfAlreadyExists(User user){
         Optional<User> userFunction = userRepository.findByName(user.getName());
         if(userFunction.isPresent()){
@@ -71,6 +87,7 @@ public class UserService {
         }
     }
 
+    //Verficar se um User ja existe -> usando ID
     public UserDTO findById(Long id){
         Optional<User> userOptional = userRepository.findById(id);
         if(!userOptional.isPresent()) {
@@ -79,6 +96,7 @@ public class UserService {
         return null;
     }
 
+    //Verificar se um User ja existe -> usando Email, login
     public UserDTO findByEmailAndLogin(String email, String login){
         Optional<User> userOptional = userRepository.findByEmailAndLogin(email, login);
         if(!userOptional.isPresent()){

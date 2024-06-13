@@ -1,8 +1,10 @@
 package br.com.davireis.projectUsers.Controller;
 
 
+import br.com.davireis.projectUsers.Dto.TaskDTO;
 import br.com.davireis.projectUsers.Dto.UserDTO;
 import br.com.davireis.projectUsers.Services.UserService;
+import br.com.davireis.projectUsers.entity.Task;
 import br.com.davireis.projectUsers.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +38,11 @@ public class UserController {
     public ResponseEntity<User> changeUserPassword(@RequestBody UserDTO userDTO){
         userService.changeUserPassword(userDTO.getEmail(), userDTO.getLogin(), userDTO.getSenha());
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PostMapping(value = "/addTask")
+    public ResponseEntity<User> addTaskToUser(@PathVariable Long id, @RequestBody  Task task){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addTaskToUser(id, task));
     }
 
     @GetMapping("/{id}")

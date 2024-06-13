@@ -1,10 +1,12 @@
 package br.com.davireis.projectUsers.Dto;
 
+import br.com.davireis.projectUsers.entity.Task;
 import br.com.davireis.projectUsers.entity.User;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserDTO {
@@ -14,6 +16,7 @@ public class UserDTO {
     private String login;
     private String senha;
     private String email;
+    private Task taskList;
 
     public UserDTO (){
 
@@ -31,6 +34,15 @@ public class UserDTO {
         login = user.getLogin();
         senha = user.getSenha();
         email = user.getEmail();
+        taskList = user.getTaskList();
+    }
+
+    public Task getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(Task taskList) {
+        this.taskList = taskList;
     }
 
     public UUID getId() {

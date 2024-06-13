@@ -3,6 +3,7 @@ package br.com.davireis.projectUsers.entity;
 import br.com.davireis.projectUsers.Dto.UserDTO;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -28,17 +29,22 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "task_id", nullable = true)
+    private Task taskList;
+
 
     public User() {
 
     }
 
-    public User(UUID id, String name, String login, String senha, String email) {
+    public User(UUID id, String name, String login, String senha, String email, Task taskList) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.senha = senha;
         this.email = email;
+        this.taskList = taskList;
     }
 
     public User(UserDTO userDTO) {
@@ -47,6 +53,15 @@ public class User {
         login = userDTO.getLogin();
         senha = userDTO.getSenha();
         email = userDTO.getEmail();
+        taskList = userDTO.getTaskList();
+    }
+
+    public Task getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(Task taskList) {
+        this.taskList = taskList;
     }
 
     public UUID getId() {
