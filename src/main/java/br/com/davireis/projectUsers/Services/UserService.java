@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -45,7 +46,7 @@ public class UserService {
     }
 
     //Procurar um User usando ID
-    public UserDTO findUserById(Long id){
+    public UserDTO findUserById(UUID id){
         findById(id);
         User entity = userRepository.findById(id).get();
         UserDTO userDTO = new UserDTO(entity);
@@ -53,7 +54,7 @@ public class UserService {
     }
 
     //Deletar um User
-    public void deleteUser(Long id){
+    public void deleteUser(UUID id){
         findById(id);
         userRepository.deleteById(id);
     }
@@ -66,6 +67,7 @@ public class UserService {
 
     //Fazer retornar uma Exception caso nao encontrev
     //Mudar senha do User
+    //Envia um email
     public void changeUserPassword(String email, String login, String senha){
         User user = userRepository.findByEmailAndLogin(email, login).get();
         user.setSenha(senha);
@@ -73,10 +75,10 @@ public class UserService {
     }
 
     //Adiciona uma task a um user
-    public User addTaskToUser(Long id, Task task){
+    public User addTaskToUser(UUID id, Task task){
         User user = userRepository.findById(id).get();
         user.setTaskList(task);
-        return user;
+        return userRepository.save(user);
     }
 
     //Verificar se um User ja existe -> usando name
@@ -88,7 +90,7 @@ public class UserService {
     }
 
     //Verficar se um User ja existe -> usando ID
-    public UserDTO findById(Long id){
+    public UserDTO findById(UUID id){
         Optional<User> userOptional = userRepository.findById(id);
         if(!userOptional.isPresent()) {
             throw new userNotFoundException();

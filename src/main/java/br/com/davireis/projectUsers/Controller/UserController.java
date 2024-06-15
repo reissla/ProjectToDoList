@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -40,14 +41,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
-    @PostMapping(value = "/addTask")
-    public ResponseEntity<User> addTaskToUser(@PathVariable Long id, @RequestBody  Task task){
+    @PostMapping("/{id}")
+    public ResponseEntity<User> addTaskToUser(@PathVariable UUID id,@RequestBody Task task){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.addTaskToUser(id, task));
     }
 
     @GetMapping("/{id}")
-    public UserDTO findById(@PathVariable Long id){
-        return userService.findUserById(id);
+    public ResponseEntity<UserDTO> findById(@PathVariable UUID id){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.findUserById(id));
     }
 
     @PutMapping
@@ -56,7 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
