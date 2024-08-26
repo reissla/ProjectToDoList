@@ -1,7 +1,7 @@
 package br.com.davireis.projectUsers.producers;
 
 import br.com.davireis.projectUsers.Dto.EmailDTO;
-import br.com.davireis.projectUsers.entity.User;
+import br.com.davireis.projectUsers.domain.User;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

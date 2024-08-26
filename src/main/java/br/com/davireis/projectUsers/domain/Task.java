@@ -1,4 +1,4 @@
-package br.com.davireis.projectUsers.entity;
+package br.com.davireis.projectUsers.domain;
 
 import br.com.davireis.projectUsers.Dto.TaskDTO;
 import jakarta.persistence.*;

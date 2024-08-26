@@ -3,7 +3,6 @@ package br.com.davireis.projectUsers.Controller;
 
 import br.com.davireis.projectUsers.Dto.TaskDTO;
 import br.com.davireis.projectUsers.Services.TaskService;
-import br.com.davireis.projectUsers.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
 package br.com.davireis.projectUsers.Dto;
 
-import br.com.davireis.projectUsers.entity.Task;
+import br.com.davireis.projectUsers.domain.Task;
 
 import java.time.LocalDateTime;
 

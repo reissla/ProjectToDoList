@@ -4,7 +4,7 @@ import br.com.davireis.projectUsers.Dto.TaskDTO;
 import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
 import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
 import br.com.davireis.projectUsers.Repository.TaskRepository;
-import br.com.davireis.projectUsers.entity.Task;
+import br.com.davireis.projectUsers.domain.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

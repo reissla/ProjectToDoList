@@ -1,6 +1,6 @@
 package br.com.davireis.projectUsers.Repository;
 
-import br.com.davireis.projectUsers.entity.Task;
+import br.com.davireis.projectUsers.domain.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

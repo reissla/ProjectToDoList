@@ -1,12 +1,8 @@
 package br.com.davireis.projectUsers.Dto;
 
-import br.com.davireis.projectUsers.entity.Task;
-import br.com.davireis.projectUsers.entity.User;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.com.davireis.projectUsers.domain.Task;
+import br.com.davireis.projectUsers.domain.User;
 
-import java.util.List;
 import java.util.UUID;
 
 public class UserDTO {

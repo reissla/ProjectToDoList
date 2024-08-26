@@ -1,16 +1,21 @@
 package br.com.davireis.projectUsers.Controller;
 
 
-import br.com.davireis.projectUsers.Dto.TaskDTO;
+import br.com.davireis.projectUsers.Dto.AuthenticationDto;
+import br.com.davireis.projectUsers.Dto.RegisterDto;
 import br.com.davireis.projectUsers.Dto.UserDTO;
+import br.com.davireis.projectUsers.Repository.UserRepository;
 import br.com.davireis.projectUsers.Services.UserService;
-import br.com.davireis.projectUsers.entity.Task;
-import br.com.davireis.projectUsers.entity.User;
+import br.com.davireis.projectUsers.domain.Task;
+import br.com.davireis.projectUsers.domain.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,16 +28,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserRepository repository;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDto dto){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping
     public List<UserDTO> listAllUsers(){
         return userService.findAllUsers();
     }
 
-    @PostMapping
-    public ResponseEntity<User> insertUser(@RequestBody @Valid UserDTO userDTO){
-        var user = new User();
-        BeanUtils.copyProperties(userDTO,user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.insertUser(user));
+    @PostMapping("/register")
+    public ResponseEntity<User> insertUser(@RequestBody @Valid UserDTO dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.insertUser(dto));
     }
 
     @PostMapping(value = "/teste")
@@ -46,6 +62,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.addTaskToUser(id, task));
     }
 
+    //So usuario com a Role ADMIN
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.findUserById(id));
@@ -56,6 +73,7 @@ public class UserController {
         return userService.updateUser(userDTO);
     }
 
+    //So usuario com a Role ADMIN
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);

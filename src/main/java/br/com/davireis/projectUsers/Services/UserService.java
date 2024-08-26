@@ -1,17 +1,17 @@
 package br.com.davireis.projectUsers.Services;
 
-import br.com.davireis.projectUsers.Dto.TaskDTO;
 import br.com.davireis.projectUsers.Dto.UserDTO;
 import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
 import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
 import br.com.davireis.projectUsers.Repository.UserRepository;
-import br.com.davireis.projectUsers.entity.Task;
-import br.com.davireis.projectUsers.entity.User;
+import br.com.davireis.projectUsers.domain.Roles;
+import br.com.davireis.projectUsers.domain.Task;
+import br.com.davireis.projectUsers.domain.User;
 import br.com.davireis.projectUsers.producers.UserProducer;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +32,10 @@ public class UserService {
 
     //Cadastrar um User
     @Transactional
-    public User insertUser(User user){
-        user = userRepository.save(user);
-        //verifyIfAlreadyExists(user);
+    public User insertUser(UserDTO dto){
+        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getSenha());
+        User user = new User(dto.getId(), dto.getName(), dto.getLogin(), encryptedPassword, dto.getEmail(), dto.getTaskList(), Roles.USER);
+        userRepository.save(user);
         userProducer.publishMessageEmail(user);//envio de mensagens email
         return user;
     }
