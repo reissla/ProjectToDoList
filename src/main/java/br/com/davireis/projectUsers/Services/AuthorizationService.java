@@ -1,6 +1,7 @@
 package br.com.davireis.projectUsers.Services;
 
 import br.com.davireis.projectUsers.Repository.UserRepository;
+import br.com.davireis.projectUsers.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
