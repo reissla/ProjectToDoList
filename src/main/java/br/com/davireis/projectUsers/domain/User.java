@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -35,44 +34,35 @@ public class User implements Serializable, UserDetails {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id", nullable = true)
-    private Task taskList;
-
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Roles role;
 
-
     public User() {
-
     }
 
-    public User(UUID id, String name, String login, String senha, String email, Task taskList) {
+    public User(UUID id, String name, String login, String senha, String email) {  // Alterado para aceitar List<Task>
         this.id = id;
         this.name = name;
         this.login = login;
         this.senha = senha;
         this.email = email;
-        this.taskList = taskList;
     }
 
     public User(UserDTO userDTO) {
-        id = userDTO.getId();
-        name = userDTO.getName();
-        login = userDTO.getLogin();
-        senha = userDTO.getSenha();
-        email = userDTO.getEmail();
-        taskList = userDTO.getTaskList();
+        this.id = userDTO.getId();
+        this.name = userDTO.getName();
+        this.login = userDTO.getLogin();
+        this.senha = userDTO.getSenha();
+        this.email = userDTO.getEmail();
     }
 
-    public User(UUID id, String name, String login, String senha, String email, Task taskList, Roles role) {
+    public User(UUID id, String name, String login, String senha, String email, Roles role) {  // Alterado para aceitar List<Task>
         this.id = id;
         this.name = name;
         this.login = login;
         this.senha = senha;
         this.email = email;
-        this.taskList = taskList;
         this.role = role;
     }
 
@@ -82,14 +72,6 @@ public class User implements Serializable, UserDetails {
 
     public void setRole(Roles role) {
         this.role = role;
-    }
-
-    public Task getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(Task taskList) {
-        this.taskList = taskList;
     }
 
     public UUID getId() {
@@ -142,21 +124,23 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id);
     }
 
-    //UserDetails
+    // UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == Roles.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == Roles.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
     }
 
     @Override
     public String getPassword() {
         return senha;
     }
-
 
     @Override
     public String getUsername() {

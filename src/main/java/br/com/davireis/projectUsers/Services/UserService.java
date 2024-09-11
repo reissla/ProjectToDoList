@@ -34,9 +34,17 @@ public class UserService {
     @Transactional
     public User insertUser(UserDTO dto){
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getSenha());
-        User user = new User(dto.getId(), dto.getName(), dto.getLogin(), encryptedPassword, dto.getEmail(), dto.getTaskList(), Roles.USER);
+        User user = new User(dto.getId(), dto.getName(), dto.getLogin(), encryptedPassword, dto.getEmail(), Roles.USER);
         userRepository.save(user);
         userProducer.publishMessageEmail(user);//envio de mensagens email
+        return user;
+    }
+
+    //add user com Role ADMIN
+    public User addADMIN(UserDTO dto){
+        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getSenha());
+        User user = new User(dto.getId(), dto.getName(), dto.getLogin(), encryptedPassword, dto.getEmail(), Roles.ADMIN);
+        userRepository.save(user);
         return user;
     }
 
@@ -76,11 +84,11 @@ public class UserService {
     }
 
     //Adiciona uma task a um user
-    public User addTaskToUser(UUID id, Task task){
-        User user = userRepository.findById(id).get();
-        user.setTaskList(task);
-        return userRepository.save(user);
-    }
+//    public User addTaskToUser(UUID id, Task task){
+//        User user = userRepository.findById(id).get();
+//        user.setTaskList(task);
+//        return userRepository.save(user);
+//    }
 
     //Verificar se um User ja existe -> usando name
     public void verifyIfAlreadyExists(User user){

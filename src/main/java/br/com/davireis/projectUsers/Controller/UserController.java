@@ -25,6 +25,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/users")
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -63,10 +64,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<User> addTaskToUser(@PathVariable UUID id,@RequestBody Task task){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addTaskToUser(id, task));
-    }
+//    @PostMapping("/{id}")
+//    public ResponseEntity<User> addTaskToUser(@PathVariable UUID id,@RequestBody Task task){
+//        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addTaskToUser(id, task));
+//    }
 
     //So usuario com a Role ADMIN
     @GetMapping("/{id}")
@@ -84,5 +85,10 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/addADMIN")
+    public ResponseEntity<User> addADMIN(@RequestBody @Valid UserDTO dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addADMIN(dto));
     }
 }

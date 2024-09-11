@@ -3,6 +3,7 @@ package br.com.davireis.projectUsers.Dto;
 import br.com.davireis.projectUsers.domain.Task;
 import br.com.davireis.projectUsers.domain.User;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserDTO {
@@ -12,10 +13,8 @@ public class UserDTO {
     private String login;
     private String senha;
     private String email;
-    private Task taskList;
 
-    public UserDTO (){
-
+    public UserDTO() {
     }
 
     public UserDTO(String email, String login, String senha) {
@@ -24,22 +23,14 @@ public class UserDTO {
         this.senha = senha;
     }
 
-    public UserDTO (User user){
-        id = user.getId();
-        name = user.getName();
-        login = user.getLogin();
-        senha = user.getSenha();
-        email = user.getEmail();
-        taskList = user.getTaskList();
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.login = user.getLogin();
+        this.senha = user.getSenha();
+        this.email = user.getEmail();
     }
 
-    public Task getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(Task taskList) {
-        this.taskList = taskList;
-    }
 
     public UUID getId() {
         return id;

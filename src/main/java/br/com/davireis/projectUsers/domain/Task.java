@@ -2,8 +2,10 @@ package br.com.davireis.projectUsers.domain;
 
 import br.com.davireis.projectUsers.Dto.TaskDTO;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_task")
@@ -13,7 +15,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tittle", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "description", nullable = true)
@@ -25,25 +27,26 @@ public class Task {
     @Column(name = "dueDate", nullable = false)
     private LocalDateTime dueDate;
 
-    @Column(name = "createdDate", nullable = false)
+    @Column(name = "createdDate", nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
-    @Column(name = "updateDate", nullable = false)
+    @Column(name = "updatedDate", nullable = false)
     private LocalDateTime updatedDate;
 
+    // Relacionamento Many-to-One com User
+    @Column(name = "user_id", nullable = false)
+    private UUID user_id;
+
     //Constructors:
-    public Task() {
-
-    }
-
-    public Task(TaskDTO taskDTO){
-        id = taskDTO.getId();
-        title = taskDTO.getTitle();
-        description = taskDTO.getDescription();
-        completed = taskDTO.isCompleted();
-        dueDate = taskDTO.getDueDate();
-        createdDate = taskDTO.getCreatedDate();
-        updatedDate = taskDTO.getUpdatedDate();
+    public Task(TaskDTO taskDTO) {
+        this.id = taskDTO.getId();
+        this.title = taskDTO.getTitle();
+        this.description = taskDTO.getDescription();
+        this.completed = taskDTO.isCompleted();
+        this.dueDate = taskDTO.getDueDate();
+        this.createdDate = taskDTO.getCreatedDate();
+        this.updatedDate = taskDTO.getUpdatedDate();
+        this.user_id = taskDTO.getUser_id();
     }
 
     public Task(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate) {
@@ -54,6 +57,20 @@ public class Task {
         this.dueDate = dueDate;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
+    }
+
+    public Task(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID user_id) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+        this.dueDate = dueDate;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.user_id= user_id;
+    }
+
+    public Task() {
     }
 
     //Getters and Setters:
@@ -111,5 +128,13 @@ public class Task {
 
     public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public UUID getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(UUID user_id) {
+        this.user_id = user_id;
     }
 }

@@ -1,8 +1,8 @@
 package br.com.davireis.projectUsers.Dto;
 
 import br.com.davireis.projectUsers.domain.Task;
-
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class TaskDTO {
 
@@ -13,21 +13,36 @@ public class TaskDTO {
     private LocalDateTime dueDate;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private UUID user_id;
 
-    public TaskDTO(Task task){
-        id = task.getId();
-        title = task.getTitle();
-        description = task.getDescription();
-        completed = task.isCompleted();
-        dueDate = task.getDueDate();
-        createdDate = task.getCreatedDate();
-        updatedDate = task.getUpdatedDate();
+    // Construtor que recebe uma entidade Task e converte em DTO
+    public TaskDTO(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID user_id) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+        this.dueDate = dueDate;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.user_id = user_id;
     }
 
+    // Construtor padrão
     public TaskDTO(){
-
     }
 
+    public TaskDTO(Task task) {
+        this.id = task.getId();
+        this.title = task.getTitle();
+        this.description = task.getDescription();
+        this.completed = task.isCompleted();
+        this.dueDate = task.getDueDate();
+        this.createdDate = task.getCreatedDate();
+        this.updatedDate = task.getUpdatedDate();
+        this.user_id = task.getUser_id();
+    }
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -83,4 +98,13 @@ public class TaskDTO {
     public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
     }
+
+    public UUID getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(UUID user_id) {
+        this.user_id = user_id;
+    }
 }
+

@@ -1,6 +1,7 @@
 package br.com.davireis.projectUsers.Exceptions.infra;
 
 import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
+import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

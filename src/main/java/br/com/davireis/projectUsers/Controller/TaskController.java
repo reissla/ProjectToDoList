@@ -15,7 +15,7 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @PostMapping
+    @PostMapping("/add")
     public void insertTask(@RequestBody TaskDTO taskDTO){
         taskService.insertTask(taskDTO);
     }
@@ -31,7 +31,7 @@ public class TaskController {
     }
 
     @GetMapping(value = "/{id}")
-    public  TaskDTO findById(@PathVariable Long id){
+    public TaskDTO findById(@PathVariable Long id){
         return taskService.findTaskById(id);
     }
 }
