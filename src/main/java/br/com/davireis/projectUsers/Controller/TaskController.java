@@ -3,10 +3,15 @@ package br.com.davireis.projectUsers.Controller;
 
 import br.com.davireis.projectUsers.Dto.TaskDTO;
 import br.com.davireis.projectUsers.Services.TaskService;
+import br.com.davireis.projectUsers.domain.Task;
+import br.com.davireis.projectUsers.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/Tasks")

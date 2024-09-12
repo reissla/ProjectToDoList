@@ -1,6 +1,8 @@
 package br.com.davireis.projectUsers.Dto;
 
 import br.com.davireis.projectUsers.domain.Task;
+import br.com.davireis.projectUsers.domain.User;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,10 +15,10 @@ public class TaskDTO {
     private LocalDateTime dueDate;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-    private UUID user_id;
+    private UUID userId;
 
     // Construtor que recebe uma entidade Task e converte em DTO
-    public TaskDTO(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID user_id) {
+    public TaskDTO(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID userId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -24,7 +26,17 @@ public class TaskDTO {
         this.dueDate = dueDate;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-        this.user_id = user_id;
+        this.userId = userId;
+    }
+
+    public TaskDTO(String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID userId) {
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+        this.dueDate = dueDate;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.userId = userId;
     }
 
     // Construtor padrão
@@ -39,7 +51,7 @@ public class TaskDTO {
         this.dueDate = task.getDueDate();
         this.createdDate = task.getCreatedDate();
         this.updatedDate = task.getUpdatedDate();
-        this.user_id = task.getUser_id();
+        this.userId = task.getUserId();
     }
 
     // Getters e Setters
@@ -99,12 +111,12 @@ public class TaskDTO {
         this.updatedDate = updatedDate;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }
 

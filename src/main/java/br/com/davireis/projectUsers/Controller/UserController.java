@@ -63,12 +63,6 @@ public class UserController {
         userService.changeUserPassword(userDTO.getEmail(), userDTO.getLogin(), userDTO.getSenha());
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
-
-//    @PostMapping("/{id}")
-//    public ResponseEntity<User> addTaskToUser(@PathVariable UUID id,@RequestBody Task task){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addTaskToUser(id, task));
-//    }
-
     //So usuario com a Role ADMIN
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable UUID id){

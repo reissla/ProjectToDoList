@@ -13,6 +13,7 @@ public class UserDTO {
     private String login;
     private String senha;
     private String email;
+    private List<Task> tasks;
 
     public UserDTO() {
     }
@@ -70,5 +71,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

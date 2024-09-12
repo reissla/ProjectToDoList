@@ -33,9 +33,8 @@ public class Task {
     @Column(name = "updatedDate", nullable = false)
     private LocalDateTime updatedDate;
 
-    // Relacionamento Many-to-One com User
-    @Column(name = "user_id", nullable = false)
-    private UUID user_id;
+    @Column(name = "userId", nullable = false)
+    private UUID userId;
 
     //Constructors:
     public Task(TaskDTO taskDTO) {
@@ -46,7 +45,7 @@ public class Task {
         this.dueDate = taskDTO.getDueDate();
         this.createdDate = taskDTO.getCreatedDate();
         this.updatedDate = taskDTO.getUpdatedDate();
-        this.user_id = taskDTO.getUser_id();
+        this.userId = taskDTO.getUserId();
     }
 
     public Task(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate) {
@@ -59,7 +58,7 @@ public class Task {
         this.updatedDate = updatedDate;
     }
 
-    public Task(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID user_id) {
+    public Task(Long id, String title, String description, boolean completed, LocalDateTime dueDate, LocalDateTime createdDate, LocalDateTime updatedDate, UUID userId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -67,7 +66,7 @@ public class Task {
         this.dueDate = dueDate;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-        this.user_id= user_id;
+        this.userId= userId;
     }
 
     public Task() {
@@ -130,11 +129,11 @@ public class Task {
         this.updatedDate = updatedDate;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }
