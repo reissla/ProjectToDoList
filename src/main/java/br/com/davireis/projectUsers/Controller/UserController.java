@@ -8,16 +8,13 @@ import br.com.davireis.projectUsers.Dto.UserDTO;
 import br.com.davireis.projectUsers.Repository.UserRepository;
 import br.com.davireis.projectUsers.Services.UserService;
 import br.com.davireis.projectUsers.config.security.TokenService;
-import br.com.davireis.projectUsers.domain.Task;
 import br.com.davireis.projectUsers.domain.User;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +42,8 @@ public class UserController {
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((User)auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponse(token));
+        UUID userId = repository.findUserIdByLogin(dto.login());
+        return ResponseEntity.ok(new LoginResponse(token, userId));
     }
 
     @GetMapping("/teste")
@@ -54,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> insertUser(@RequestBody @Valid UserDTO dto){
+    public ResponseEntity<RegisterDto> insertUser(@RequestBody @Valid UserDTO dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.insertUser(dto));
     }
 

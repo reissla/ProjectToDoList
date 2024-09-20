@@ -1,5 +1,6 @@
 package br.com.davireis.projectUsers.Services;
 
+import br.com.davireis.projectUsers.Dto.RegisterDto;
 import br.com.davireis.projectUsers.Dto.UserDTO;
 import br.com.davireis.projectUsers.Exceptions.userAlreadyExistsException;
 import br.com.davireis.projectUsers.Exceptions.userNotFoundException;
@@ -32,12 +33,13 @@ public class UserService {
 
     //Cadastrar um User
     @Transactional
-    public User insertUser(UserDTO dto){
+    public RegisterDto insertUser(UserDTO dto){
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getSenha());
-        User user = new User(dto.getId(), dto.getName(), dto.getLogin(), dto.getSenha(), dto.getEmail(),Roles.USER);
+        User user = new User(dto.getId(), dto.getName(), dto.getLogin(), encryptedPassword, dto.getEmail(),Roles.USER);
         userRepository.save(user);
+        RegisterDto userId = new RegisterDto(user.getId());
         userProducer.publishMessageEmail(user);//envio de mensagens email
-        return user;
+        return userId;
     }
 
     //add user com Role ADMIN

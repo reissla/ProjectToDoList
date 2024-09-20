@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -43,7 +44,6 @@ public class TaskService {
     //Inserir Task no banco de dados
     public Task insertTask(TaskDTO taskDTO){
         Task task = new Task(taskDTO);
-        verifyIfAlreadyExists(task);
         return taskRepository.save(task);
     }
 
@@ -53,7 +53,13 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
+    //Listar all tasks pelo Id do user passado:
+    public List<TaskDTO> listTasksByUserId(UUID id){
+        List<Task> tasks = taskRepository.findAllTasksByUserId(id);
+        return tasks.stream().map(TaskDTO::new).toList();
+    }
 
+    //Listar task pelo userId
     public TaskDTO findById(Long id){
         Optional<Task> taskOptional = taskRepository.findById(id);
         if(!taskOptional.isPresent()) {

@@ -22,4 +22,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findById(@Param("id") UUID id);
 
     UserDetails findByLogin(String login);
+
+    //Retorna o UUID do user passando o login
+    @Query("SELECT u.id FROM User u WHERE u.login = :login")
+    UUID findUserIdByLogin(@Param("login") String login);
 }

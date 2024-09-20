@@ -39,4 +39,14 @@ public class TaskController {
     public TaskDTO findById(@PathVariable Long id){
         return taskService.findTaskById(id);
     }
+
+    @GetMapping(value = "/listAll/{id}")
+    public List<TaskDTO> listAllTasksByUserId(@PathVariable UUID id){
+        return taskService.listTasksByUserId(id);
+    }
+
+    @GetMapping(value = "/list/{id}")
+    public List<TaskDTO> listTasksByUserId(@PathVariable UUID id){
+        return taskService.listTasksByUserId(id);
+    }
 }

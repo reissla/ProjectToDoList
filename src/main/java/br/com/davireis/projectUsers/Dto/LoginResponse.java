@@ -1,4 +1,6 @@
 package br.com.davireis.projectUsers.Dto;
 
-public record LoginResponse(String token) {
+import java.util.UUID;
+
+public record LoginResponse(String token, UUID userId) {
 }

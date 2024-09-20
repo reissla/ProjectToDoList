@@ -1,6 +1,6 @@
 package br.com.davireis.projectUsers.Dto;
 
-import br.com.davireis.projectUsers.domain.Roles;
+import java.util.UUID;
 
-public record RegisterDto(String login, String password, Roles role) {
+public record RegisterDto(UUID userId) {
 }
